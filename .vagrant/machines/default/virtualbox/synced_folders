@@ -1,0 +1,1 @@
+{"virtualbox":{"/etc/chef":{"create":true,"guestpath":"/etc/chef","hostpath":"C:/vm/test2","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/vm/test2","disabled":false}}}

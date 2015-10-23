@@ -1,0 +1,19 @@
+# See http://docs.chef.io/config_rb_knife.html for more information on knife configuration options
+
+current_dir = File.dirname(__FILE__)
+
+log_level                :info
+
+log_location             STDOUT
+
+node_name                "aldricandtarji"
+
+client_key               "~/.chef/aldricandtarji.pem"
+
+validation_client_name   "testchefagain-validator"
+
+validation_key           "~/.chef/testchefagain-validator.pem"
+
+chef_server_url          "https://api.chef.io/organizations/testchefagain"
+
+cookbook_path            ["~/.chef/cookbooks"]
