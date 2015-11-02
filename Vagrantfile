@@ -23,7 +23,8 @@ Vagrant.configure(2) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-    config.vm.network "forwarded_port", guest: 80, host: 8080
+    config.vm.network "forwarded_port", guest: 5000, host: 5000
+   
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -68,9 +69,10 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use. 
 
     config.vm.provision "shell", 
-      inline: "cp /vagrant/testchefagain-validator.pem /etc/chef/;  cp /vagrant/client.rb /etc/chef/;
-      cd /etc/chef
-      curl -L https://www.opscode.com/chef/install.sh | sudo bash;"
+      inline: "cp /vagrant/testchefagain-validator.pem /etc/chef/;  
+      cp /vagrant/client.rb /etc/chef/;
+      cp /vagrant/hello-api.conf /etc/init;
+      cd /etc/chef"
 
 
     config.vm.provision :chef_client do |chef|
@@ -78,10 +80,14 @@ Vagrant.configure(2) do |config|
       chef.chef_server_url = "https://api.chef.io/organizations/testchefagain"
       chef.validation_client_name = "testchefagain-validator"
       chef.validation_key_path = "chef-repo/.chef/testchefagain-validator.pem"
-      chef.add_recipe  "default"
+      chef.add_recipe  "helloapp"
       chef.node_name = "aldricandtarji"
       chef.log_level = :debug
       chef.delete_node = true
       chef.delete_client = true
+    end
+
+    config.trigger.after :destroy do
+      run "rm -Rf /C/vm/test2/client.pem"
     end
 end
